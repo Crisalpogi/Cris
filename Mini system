@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_SHIPS 100
+#define MAX_NAME_LENGTH 50
+
+struct Ship {
+    int id;
+    char name[MAX_NAME_LENGTH];
+    int year;
+};
+
+struct Ship ships[MAX_SHIPS];
+int numShips = 0;
+
+void addShip() {
+    if (numShips == MAX_SHIPS) {
+        printf("Maximum number of ships reached.\n");
+        return;
+    }
+
+    struct Ship newShip;
+
+    printf("Enter ship ID: ");
+    scanf("%d", &newShip.id);
+    printf("Enter ship name: ");
+    scanf(" %[^\n]s", newShip.name);
+    printf("Enter ship year: ");
+    scanf("%d", &newShip.year);
+
+    ships[numShips++] = newShip;
+
+    printf("Ship added successfully.\n");
+}
+
+void displayShips() {
+    if (numShips == 0) {
+        printf("No ships found.\n");
+        return;
+    }
+
+    printf("Ship Records:\n");
+    printf("ID\tName\tYear\n");
+
+    for (int i = 0; i < numShips; i++) {
+        printf("%d\t%s\t%d\n", ships[i].id, ships[i].name, ships[i].year);
+    }
+}
+
+void searchShip() {
+    if (numShips == 0) {
+        printf("No ships found.\n");
+        return;
+    }
+
+    int searchId;
+    printf("Enter ship ID to search: ");
+    scanf("%d", &searchId);
+
+    for (int i = 0; i < numShips; i++) {
+        if (ships[i].id == searchId) {
+            printf("Ship found:\n");
+            printf("ID\tName\tYear\n");
+            printf("%d\t%s\t%d\n", ships[i].id, ships[i].name, ships[i].year);
+            return;
+        }
+    }
+
+    printf("Ship with ID %d not found.\n", searchId);
+}
+
+void saveShipsToFile() {
+    FILE *file = fopen("ships.csv", "w");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+
+    fprintf(file, "ID,Name,Year\n");
+
+    for (int i = 0; i < numShips; i++) {
+        fprintf(file, "%d,%s,%d\n", ships[i].id, ships[i].name, ships[i].year);
+    }
+
+    fclose(file);
+    printf("Ships saved to file successfully.\n");
+}
+
+void loadShipsFromFile() {
+    FILE *file = fopen("ships.csv", "r");
+    if (file == NULL) {
+        printf("Error opening file for reading.\n");
+        return;
+    }
+
+    
+    char buffer[100];
+    fgets(buffer, sizeof(buffer), file);
+
+    numShips = 0;
+
+    while (fgets(buffer, sizeof(buffer), file)) {
+        sscanf(buffer, "%d,%[^,],%d", &ships[numShips].id, ships[numShips].name, &ships[numShips].year);
+        numShips++;
+    }
+
+    fclose(file);
+    printf("Ships loaded from file successfully.\n");
+}
+
+int main() {
+    int choice;
+
+    loadShipsFromFile();  
+
+    while (1) {
+        printf("\nShip Management System\n");
+        printf("1. Add Ship\n");
+        printf("2. Display Ships\n");
+        printf("3. Search Ship\n");
+        printf("4. Save Ships to File\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addShip();
+                break;
+            case 2:
+                displayShips();
+                break;
+            case 3:
+                searchShip();
+                break;
+            case 4:
+                saveShipsToFile();
+                break;
+            case 5:
+                printf("Exiting program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    }
+
+    return 0;
+}
+    
