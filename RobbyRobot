@@ -26,12 +26,12 @@ int main() {
 			printf("\n [2]East , [4]West , [6]North , [8]South\n");   printf("\Enter direction: "); 
 				scanf("%d",&direction);
 				if(direction==2) {
-					printf("\n\ How many points? : ");
+					printf("\n\n How many points? : ");
 					scanf("%d",&points);
 					x+=points;
-					printf("\n\ Robby moved East %d,%d",x,y);
+					printf("\n\n Robby moved East %d,%d",x,y);
 				} else if(direction==4) {
-					printf("\n\ How many points? : ");
+					printf("\n\n How many points? : ");
 					scanf("%d",&points);
 					x-=points;
 					printf("\n\nRobby moved West %d,%d",x,y);
