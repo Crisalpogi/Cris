@@ -1,0 +1,62 @@
+#include <stdlib.h>
+
+int main() {
+	int x=0,y=0,direction,points;
+	char choice;
+{
+    printf("Robot Command Menu\n\n\n");
+
+    while(1)
+    {
+        printf("a] Origin \n");
+        printf("b] Location\n");
+        printf("c] Move\n");
+        printf("d] Exit\n\n\n");
+        printf("Enter a valid choice :  ");
+        scanf("%s",&choice);
+        
+        switch(choice) {
+			case 'a': x=0; y=0; 
+			printf("\n\nRobby's location goes back to its origin (%d,%d) posistion\n",x,y);
+				break;
+			case 'b': 
+			printf("\n\n\nRobby is at location %d,%d\n",x,y);
+				break;
+			case 'c': 
+			printf("\n [2]East , [4]West , [6]North , [8]South\n");   printf("\Enter direction: "); 
+				scanf("%d",&direction);
+				if(direction==2) {
+					printf("\n\ How many points? : ");
+					scanf("%d",&points);
+					x+=points;
+					printf("\n\ Robby moved East %d,%d",x,y);
+				} else if(direction==4) {
+					printf("\n\ How many points? : ");
+					scanf("%d",&points);
+					x-=points;
+					printf("\n\nRobby moved West %d,%d",x,y);
+				} else if(direction==6) {
+					printf("\n\nHow many points? : ");
+					scanf("%d",&points);
+					y+=points;
+					printf("\n\nRobby moved North %d,%d",x,y);
+                } else if(direction==8) {
+					printf("\n\nHow many points? : ");
+					scanf("%d",&points);
+					y-=points;
+					printf("\n\nRobby moved South %d,%d",x,y);
+                } else printf("\n\n\nOpppss Invalid Direction, Please Try Again...\n");
+				break;
+			case 'd': printf("\n\n\nCoding is Fun!!! Goodbye ;)\n\n\n");
+                exit(0); 
+				break;
+			default: printf("\n\n\nOpppss Invalid Choice, Please Try Again... \n");
+                break;
+		} 
+		printf("\n\n\nPress any key to continue...\n");
+        
+    } while(choice!='d');
+    
+	return 0;
+}
+}
